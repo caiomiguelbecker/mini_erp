@@ -9,7 +9,7 @@ class Fornecedor:
 
     def validar_sla(self, sla):
         if sla < 0:
-            raise ValueError("O SLA de atendimento não pode ser negativo.")
+            raise ValueError("fornecedor.sla_erro_negativo")
 
     # Encapsulamento do ID
     @property

@@ -18,6 +18,8 @@ class Categoria:
 
     @nome.setter
     def nome(self, novo_nome):
+        if not novo_nome or not novo_nome.strip():
+            raise ValueError("categoria.erro_nome_vazio")
         self._nome = novo_nome
 
     def atualizar_dados(self, novo_nome):

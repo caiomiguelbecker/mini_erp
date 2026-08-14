@@ -1,6 +1,5 @@
-
-
 from app.models.cidade import Cidade
+from app.core.idioma import Idioma
 
 import tkinter as tk
 from tkinter import messagebox
@@ -19,7 +18,7 @@ class Cidade_View:
         self.configurar_eventos()
 
     def configurar_janela(self):
-        self.root.title("CRUD de Cidades")
+        self.root.title(Idioma.t("cidade.janela_titulo"))
         self.root.geometry("800x600")
         self.root.resizable(False, False)
 
@@ -27,7 +26,7 @@ class Cidade_View:
     def criar_componentes(self):
         self.lbl_titulo = tk.Label(
             self.root,
-            text = "Cadastro de Cidades",
+            text = Idioma.t("cidade.titulo"),
             font = ("Arial", 16, "bold"),
         )
         self.lbl_titulo.grid(
@@ -39,7 +38,7 @@ class Cidade_View:
         )
         self.frm_dados = tk.LabelFrame(
             self.root,
-            text = "Dados da cidade"
+            text = Idioma.t("cidade.dados_frame")
         )
         self.frm_dados.grid(
             row = 1,
@@ -53,7 +52,7 @@ class Cidade_View:
         self.frm_dados.grid_columnconfigure(1, weight=1)
         self.lbl_id = tk.Label(
             self.frm_dados,
-            text = "ID:"
+            text = f"{Idioma.t('comum.id')}:"
         )
         self.lbl_id.grid(
             row = 0,
@@ -76,7 +75,7 @@ class Cidade_View:
         )
         self.lbl_nome = tk.Label(
             self.frm_dados,
-            text = "Nome:"
+            text = f"{Idioma.t('comum.nome')}:"
         )
         self.lbl_nome.grid(
             row = 1,
@@ -98,7 +97,7 @@ class Cidade_View:
         )
         self.lbl_estados = tk.Label(
             self.frm_dados,
-            text = "Estado:"
+            text = f"{Idioma.t('cidade.estado')}:"
         )
         self.lbl_estados.grid(
             row = 2,
@@ -133,7 +132,7 @@ class Cidade_View:
         )
         self.btn_novo = tk.Button(
             self.frm_botoes,
-            text = "Novo",
+            text = Idioma.t("comum.novo"),
             width = 15
         )
         self.btn_novo.grid(
@@ -144,7 +143,7 @@ class Cidade_View:
         )
         self.btn_salvar = tk.Button(
             self.frm_botoes,
-            text = "Salvar",
+            text = Idioma.t("comum.salvar"),
             width = 15
         )
         self.btn_salvar.grid(
@@ -155,7 +154,7 @@ class Cidade_View:
         )
         self.btn_alterar = tk.Button(
             self.frm_botoes,
-            text = "Alterar",
+            text = Idioma.t("comum.alterar"),
             width = 15
         )
         self.btn_alterar.grid(
@@ -166,7 +165,7 @@ class Cidade_View:
         )
         self.btn_excluir = tk.Button(
             self.frm_botoes,
-            text = "Excluir",
+            text = Idioma.t("comum.excluir"),
             width = 15
         )
         self.btn_excluir.grid(
@@ -177,7 +176,7 @@ class Cidade_View:
         )
         self.btn_fechar = tk.Button(
             self.frm_botoes,
-            text = "Fechar",
+            text = Idioma.t("comum.fechar"),
             width = 15
         )
         self.btn_fechar.grid(
@@ -225,15 +224,15 @@ class Cidade_View:
         )
         self.tbl_cidades.heading(
             "id",
-            text = "ID"
+            text = Idioma.t("comum.id")
         )
         self.tbl_cidades.heading(
             "nome",
-            text = "Nome"
+            text = Idioma.t("comum.nome")
         )
         self.tbl_cidades.heading(
             "estado",
-            text = "Estado"
+            text = Idioma.t("cidade.estado")
         )
     def configurar_eventos(self):
         self.btn_novo.config(
@@ -308,8 +307,8 @@ class Cidade_View:
     def confirmar_exclusao(self):
 
         return messagebox.askyesno(
-            "Confirmação",
-            "Deseja realmente excluir esta cidade?",
+            Idioma.t("comum.confirmacao"),
+            Idioma.t("cidade.confirmar_exclusao"),
             parent=self.root
         )
 
@@ -317,7 +316,7 @@ class Cidade_View:
         nome = self.txt_nome.get()
         indice = self.cmb_estados.current()
         if indice < 0:
-            raise ValueError("Selecione um estado.")
+            raise ValueError("cidade.erro_estado_nao_selecionado")
         estado = self._estados[indice]
         return nome, estado
 

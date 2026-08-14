@@ -36,3 +36,4 @@ class Estado:
 
         self._nome = novo_nome
         self._sigla = nova_sigla.upper()
+        

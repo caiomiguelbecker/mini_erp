@@ -15,8 +15,8 @@ class Usuario:
         perfil: Perfil
     ):
         self._id = id
-        self._nome = nome
-        self._email = email
+        self.nome = nome
+        self.email = email
         self._data_nascimento = data_nascimento
         self._cidade = cidade
         self._perfil = perfil
@@ -35,6 +35,8 @@ class Usuario:
 
     @nome.setter
     def nome(self, novo_nome):
+        if not novo_nome or not novo_nome.strip():
+            raise ValueError("usuario.erro_nome_vazio")
         self._nome = novo_nome
 
     @property
@@ -43,6 +45,8 @@ class Usuario:
 
     @email.setter
     def email(self, novo_email):
+        if not novo_email or not novo_email.strip():
+            raise ValueError("usuario.erro_email_vazio")
         self._email = novo_email
 
     @property
@@ -81,8 +85,8 @@ class Usuario:
         nova_cidade,
         novo_perfil
     ):
-        self._nome = novo_nome
-        self._email = novo_email
+        self.nome = novo_nome
+        self.email = novo_email
         self._data_nascimento = nova_data_nascimento
         self._cidade = nova_cidade
         self._perfil = novo_perfil

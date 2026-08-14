@@ -1,7 +1,6 @@
-
-
 from app.models.usuario import Usuario
 from app.core.data_utils import Data_Utils
+from app.core.idioma import Idioma
 
 import tkinter as tk
 from tkinter import messagebox
@@ -22,7 +21,7 @@ class Usuario_View:
         self.configurar_eventos()
 
     def configurar_janela(self):
-        self.root.title("CRUD de Usuários")
+        self.root.title(Idioma.t("usuario.janela_titulo"))
         self.root.geometry("900x600")
         self.root.resizable(False, False)
 
@@ -30,7 +29,7 @@ class Usuario_View:
     def criar_componentes(self):
         self.lbl_titulo = tk.Label(
             self.root,
-            text = "Cadastro de Usuários",
+            text = Idioma.t("usuario.titulo"),
             font = ("Arial", 16, "bold"),
         )
         self.lbl_titulo.grid(
@@ -42,7 +41,7 @@ class Usuario_View:
         )
         self.frm_dados = tk.LabelFrame(
             self.root,
-            text = "Dados do usuário"
+            text = Idioma.t("usuario.dados_frame")
         )
         self.frm_dados.grid(
             row = 1,
@@ -58,7 +57,7 @@ class Usuario_View:
         self.frm_dados.grid_columnconfigure(3, weight=1)
         self.lbl_id = tk.Label(
             self.frm_dados,
-            text = "ID:"
+            text = f"{Idioma.t('comum.id')}:"
         )
         self.lbl_id.grid(
             row = 0,
@@ -81,7 +80,7 @@ class Usuario_View:
         )
         self.lbl_nome = tk.Label(
             self.frm_dados,
-            text = "Nome:"
+            text = f"{Idioma.t('usuario.nome')}:"
         )
         self.lbl_nome.grid(
             row = 1,
@@ -103,7 +102,7 @@ class Usuario_View:
         )
         self.lbl_email = tk.Label(
             self.frm_dados,
-            text = "Email:"
+            text = f"{Idioma.t('usuario.email')}:"
         )
         self.lbl_email.grid(
             row = 1,
@@ -125,7 +124,7 @@ class Usuario_View:
         )
         self.lbl_data_nascimento = tk.Label(
             self.frm_dados,
-            text = "Nascimento (DD/MM/AAAA):"
+            text = f"{Idioma.t('usuario.nascimento')} (DD/MM/AAAA):"
         )
         self.lbl_data_nascimento.grid(
             row = 2,
@@ -147,7 +146,7 @@ class Usuario_View:
         )
         self.lbl_estados = tk.Label(
             self.frm_dados,
-            text = "Estado:"
+            text = f"{Idioma.t('cidade.estado')}:"
         )
         self.lbl_estados.grid(
             row = 2,
@@ -170,7 +169,7 @@ class Usuario_View:
         )
         self.lbl_cidades = tk.Label(
             self.frm_dados,
-            text = "Cidade:"
+            text = f"{Idioma.t('usuario.cidade')}:"
         )
         self.lbl_cidades.grid(
             row = 3,
@@ -193,7 +192,7 @@ class Usuario_View:
         )
         self.lbl_perfis = tk.Label(
             self.frm_dados,
-            text = "Perfil:"
+            text = f"{Idioma.t('usuario.perfil')}:"
         )
         self.lbl_perfis.grid(
             row = 3,
@@ -228,7 +227,7 @@ class Usuario_View:
         )
         self.btn_novo = tk.Button(
             self.frm_botoes,
-            text = "Novo",
+            text = Idioma.t("comum.novo"),
             width = 15
         )
         self.btn_novo.grid(
@@ -239,7 +238,7 @@ class Usuario_View:
         )
         self.btn_salvar = tk.Button(
             self.frm_botoes,
-            text = "Salvar",
+            text = Idioma.t("comum.salvar"),
             width = 15
         )
         self.btn_salvar.grid(
@@ -250,7 +249,7 @@ class Usuario_View:
         )
         self.btn_alterar = tk.Button(
             self.frm_botoes,
-            text = "Alterar",
+            text = Idioma.t("comum.alterar"),
             width = 15
         )
         self.btn_alterar.grid(
@@ -261,7 +260,7 @@ class Usuario_View:
         )
         self.btn_excluir = tk.Button(
             self.frm_botoes,
-            text = "Excluir",
+            text = Idioma.t("comum.excluir"),
             width = 15
         )
         self.btn_excluir.grid(
@@ -272,7 +271,7 @@ class Usuario_View:
         )
         self.btn_fechar = tk.Button(
             self.frm_botoes,
-            text = "Fechar",
+            text = Idioma.t("comum.fechar"),
             width = 15
         )
         self.btn_fechar.grid(
@@ -348,35 +347,35 @@ class Usuario_View:
         )
         self.tbl_usuarios.heading(
             "id",
-            text = "ID"
+            text = Idioma.t("comum.id")
         )
         self.tbl_usuarios.heading(
             "nome",
-            text = "Nome"
+            text = Idioma.t("usuario.nome")
         )
         self.tbl_usuarios.heading(
             "email",
-            text = "Email"
+            text = Idioma.t("usuario.email")
         )
         self.tbl_usuarios.heading(
             "nascimento",
-            text = "Nascimento"
+            text = Idioma.t("usuario.nascimento")
         )
         self.tbl_usuarios.heading(
             "idade",
-            text = "Idade"
+            text = Idioma.t("usuario.idade")
         )
         self.tbl_usuarios.heading(
             "cidade",
-            text = "Cidade"
+            text = Idioma.t("usuario.cidade")
         )
         self.tbl_usuarios.heading(
             "estado",
-            text = "UF"
+            text = Idioma.t("usuario.uf")
         )
         self.tbl_usuarios.heading(
             "perfil",
-            text = "Perfil"
+            text = Idioma.t("usuario.perfil")
         )
     def configurar_eventos(self):
         self.btn_novo.config(
@@ -508,8 +507,8 @@ class Usuario_View:
     def confirmar_exclusao(self):
 
         return messagebox.askyesno(
-            "Confirmação",
-            "Deseja realmente excluir este usuário?",
+            Idioma.t("comum.confirmacao"),
+            Idioma.t("usuario.confirmar_exclusao"),
             parent=self.root
         )
 
@@ -518,14 +517,14 @@ class Usuario_View:
         email = self.txt_email.get()
         data_nascimento = self.txt_data_nascimento.get()
         if not Data_Utils.validar_data(data_nascimento):
-            raise ValueError("Data de nascimento inválida. Use o formato DD/MM/AAAA.")
+            raise ValueError("usuario.erro_data_invalida")
         indice_cidade = self.cmb_cidades.current()
         if indice_cidade < 0:
-            raise ValueError("Selecione uma cidade.")
+            raise ValueError("usuario.erro_cidade_nao_selecionado")
         cidade = self._cidades[indice_cidade]
         indice_perfil = self.cmb_perfis.current()
         if indice_perfil < 0:
-            raise ValueError("Selecione um perfil.")
+            raise ValueError("usuario.erro_perfil_nao_selecionado")
         perfil = self._perfis[indice_perfil]
         return nome, email, data_nascimento, cidade, perfil
 

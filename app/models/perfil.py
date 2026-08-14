@@ -20,6 +20,8 @@ class Perfil:
 
     @nome.setter
     def nome(self, novo_nome):
+        if not novo_nome or not novo_nome.strip():
+            raise ValueError("perfil.erro_nome_vazio")
         self._nome = novo_nome
 
     @property
@@ -28,6 +30,8 @@ class Perfil:
 
     @descricao.setter
     def descricao(self, nova_descricao):
+        if not nova_descricao or not nova_descricao.strip():
+            raise ValueError("perfil.erro_descricao_vazio")
         self._descricao = nova_descricao
 
     @property

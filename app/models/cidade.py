@@ -5,7 +5,7 @@ class Cidade:
 
     def __init__(self, id, nome, estado: Estado):
         self._id = id
-        self._nome = nome
+        self.nome = nome
         self._estado = estado
 
     @property
@@ -22,6 +22,8 @@ class Cidade:
 
     @nome.setter
     def nome(self, novo_nome):
+        if not novo_nome or not novo_nome.strip():
+            raise ValueError("cidade.erro_nome_vazio")
         self._nome = novo_nome
 
     @property
@@ -38,5 +40,5 @@ class Cidade:
         novo_estado
     ):
 
-        self._nome = novo_nome
+        self.nome = novo_nome
         self._estado = novo_estado
