@@ -1,12 +1,14 @@
 from app.models.fornecedor import Fornecedor
 
 class Fornecedor_Controller:
-    def __init__(self, dao, categoria_dao, fornecedor_categoria_dao, view):
+    def __init__(self, dao, categoria_dao, fornecedor_categoria_dao, perfil_fornecedor_dao, view):
         self.dao = dao
         self.categoria_dao = categoria_dao
         self.fornecedor_categoria_dao = fornecedor_categoria_dao
+        self.perfil_fornecedor_dao = perfil_fornecedor_dao
         self.view = view
         self.fornecedor_selecionado = None
+        self.usuario_logado = None
 
 
     def new(self):
@@ -29,7 +31,12 @@ class Fornecedor_Controller:
             self.view.exibir_mensagem("Erro: Entrada inválida. Tente novamente.", False)
         
     def get_all(self):
-        fornecedores = self.dao.get_all()
+        if self.usuario_logado is not None:
+            fornecedores = self.perfil_fornecedor_dao.get_fornecedores_por_perfil(
+                self.usuario_logado.perfil
+            )
+        else:
+            fornecedores = self.dao.get_all()
         self.view.exibir_fornecedores(fornecedores)
 
     def selecionar_fornecedor(self, event):

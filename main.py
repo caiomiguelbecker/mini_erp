@@ -44,6 +44,10 @@ from app.dao.cliente_dao import Cliente_DAO
 from app.views.cliente_view import Cliente_View
 from app.controllers.cliente_controller import Cliente_Controller
 
+# Componentes de Login
+from app.views.login_view import Login_View
+from app.controllers.login_controller import Login_Controller
+
 import tkinter as tk
 
 
@@ -57,6 +61,8 @@ class ErpApplication:
 
         self._root = tk.Tk()
 
+        self._usuario_logado = None
+
         self._janela_estados = None
         self._janela_cidades = None
         self._janela_fornecedores = None
@@ -65,8 +71,6 @@ class ErpApplication:
         self._janela_perfis = None
         self._janela_usuarios = None
         self._janela_clientes = None
-
-        self._configurar_janela()
 
         # ===========================
         # ESTADOS
@@ -120,10 +124,15 @@ class ErpApplication:
             self._database
         )
 
+        self._dao_perfil_fornecedores = Perfil_Fornecedor_DAO(
+            self._database
+        )
+
         self._ctrl_fornecedores = Fornecedor_Controller(
             dao=self._dao_fornecedores,
             categoria_dao=self._dao_categorias,
             fornecedor_categoria_dao=self._dao_fornecedor_categorias,
+            perfil_fornecedor_dao=self._dao_perfil_fornecedores,
             view=None
         )
 
@@ -147,10 +156,6 @@ class ErpApplication:
         # ===========================
 
         self._dao_perfis = Perfil_DAO(
-            self._database
-        )
-
-        self._dao_perfil_fornecedores = Perfil_Fornecedor_DAO(
             self._database
         )
 
@@ -195,10 +200,31 @@ class ErpApplication:
             view=None
         )
 
+        self._iniciar_login()
+
+    def _iniciar_login(self):
+        ctrl_login = Login_Controller(
+            usuario_dao=self._dao_usuarios,
+            view=None,
+            ao_autenticar=self._on_login_sucesso
+        )
+        ctrl_login.view = Login_View(self._root, ctrl_login)
+
+    def _on_login_sucesso(self, usuario):
+        self._usuario_logado = usuario
+        self._ctrl_fornecedores.usuario_logado = usuario
+
+        for widget in self._root.winfo_children():
+            widget.destroy()
+
+        self._configurar_janela()
         self._criar_menu()
 
     def _configurar_janela(self):
-        self._root.title("Sistema Corporativo ERP")
+        titulo = "Sistema Corporativo ERP"
+        if self._usuario_logado is not None:
+            titulo = f"{titulo} — {self._usuario_logado.nome} ({self._usuario_logado.perfil.nome})"
+        self._root.title(titulo)
         self._root.state("zoomed")
 
     def _criar_menu(self):

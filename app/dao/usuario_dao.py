@@ -22,10 +22,12 @@ class Usuario_DAO(DAO):
                         EMAIL,
                         DATA_NASCIMENTO,
                         CIDADE_ID,
-                        PERFIL_ID
+                        PERFIL_ID,
+                        SENHA
                     )
                     VALUES
                     (
+                        %s,
                         %s,
                         %s,
                         %s,
@@ -41,7 +43,8 @@ class Usuario_DAO(DAO):
                     usuario.email,
                     usuario.data_nascimento,
                     usuario.cidade.id,
-                    usuario.perfil.id
+                    usuario.perfil.id,
+                    usuario.senha
                 )
             )
 
@@ -71,7 +74,8 @@ class Usuario_DAO(DAO):
                         EMAIL,
                         DATA_NASCIMENTO,
                         CIDADE_ID,
-                        PERFIL_ID
+                        PERFIL_ID,
+                        SENHA
                     FROM
                         USUARIO
                     ORDER BY
@@ -86,25 +90,8 @@ class Usuario_DAO(DAO):
 
             for registro in registros:
 
-                cidade = self._cidade_dao.get_by_id(
-                    registro[4]
-                )
-
-                perfil = self._perfil_dao.get_by_id(
-                    registro[5]
-                )
-
                 usuarios.append(
-
-                    Usuario(
-                        registro[0],
-                        registro[1],
-                        registro[2],
-                        registro[3],
-                        cidade,
-                        perfil
-                    )
-
+                    self._montar_usuario(registro)
                 )
 
             return usuarios
@@ -125,7 +112,8 @@ class Usuario_DAO(DAO):
                         EMAIL,
                         DATA_NASCIMENTO,
                         CIDADE_ID,
-                        PERFIL_ID
+                        PERFIL_ID,
+                        SENHA
                     FROM
                         USUARIO
                     WHERE
@@ -139,25 +127,63 @@ class Usuario_DAO(DAO):
             if registro is None:
                 return None
 
-            cidade = self._cidade_dao.get_by_id(
-                registro[4]
-            )
-
-            perfil = self._perfil_dao.get_by_id(
-                registro[5]
-            )
-
-            return Usuario(
-                registro[0],
-                registro[1],
-                registro[2],
-                registro[3],
-                cidade,
-                perfil
-            )
+            return self._montar_usuario(registro)
 
         finally:
             self.desconectar(cursor, conexao)
+
+    def get_by_email(self, email):
+
+        conexao, cursor = self.conectar()
+
+        try:
+
+            sql = """
+                    SELECT
+                        ID,
+                        NOME,
+                        EMAIL,
+                        DATA_NASCIMENTO,
+                        CIDADE_ID,
+                        PERFIL_ID,
+                        SENHA
+                    FROM
+                        USUARIO
+                    WHERE
+                        EMAIL = %s
+                  """
+
+            cursor.execute(sql, (email,))
+
+            registro = cursor.fetchone()
+
+            if registro is None:
+                return None
+
+            return self._montar_usuario(registro)
+
+        finally:
+            self.desconectar(cursor, conexao)
+
+    def _montar_usuario(self, registro):
+
+        cidade = self._cidade_dao.get_by_id(
+            registro[4]
+        )
+
+        perfil = self._perfil_dao.get_by_id(
+            registro[5]
+        )
+
+        return Usuario(
+            registro[0],
+            registro[1],
+            registro[2],
+            registro[3],
+            cidade,
+            perfil,
+            registro[6]
+        )
 
     def update(self, usuario):
 
@@ -172,7 +198,8 @@ class Usuario_DAO(DAO):
                         EMAIL = %s,
                         DATA_NASCIMENTO = %s,
                         CIDADE_ID = %s,
-                        PERFIL_ID = %s
+                        PERFIL_ID = %s,
+                        SENHA = %s
                     WHERE
                         ID = %s
                   """
@@ -185,6 +212,7 @@ class Usuario_DAO(DAO):
                     usuario.data_nascimento,
                     usuario.cidade.id,
                     usuario.perfil.id,
+                    usuario.senha,
                     usuario.id
                 )
             )

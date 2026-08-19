@@ -12,7 +12,8 @@ class Usuario:
         email,
         data_nascimento,
         cidade: Cidade,
-        perfil: Perfil
+        perfil: Perfil,
+        senha
     ):
         self._id = id
         self._nome = nome
@@ -20,6 +21,7 @@ class Usuario:
         self._data_nascimento = data_nascimento
         self._cidade = cidade
         self._perfil = perfil
+        self._senha = senha
 
     @property
     def id(self):
@@ -68,6 +70,14 @@ class Usuario:
     @perfil.setter
     def perfil(self, novo_perfil):
         self._perfil = novo_perfil
+
+    @property
+    def senha(self):
+        return self._senha
+
+    @senha.setter
+    def senha(self, nova_senha):
+        self._senha = nova_senha
 
     @property
     def idade(self):

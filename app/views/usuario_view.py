@@ -214,13 +214,37 @@ class Usuario_View:
             pady = 5,
             sticky = "w"
         )
+        self.lbl_senha = tk.Label(
+            self.frm_dados,
+            text = "Nova senha (deixe em branco para manter, na edição):"
+        )
+        self.lbl_senha.grid(
+            row = 4,
+            column = 0,
+            columnspan = 2,
+            padx = 5,
+            pady = 5,
+            sticky = "w"
+        )
+        self.txt_senha = tk.Entry(
+            self.frm_dados,
+            width = 20,
+            show = "*"
+        )
+        self.txt_senha.grid(
+            row = 4,
+            column = 2,
+            padx = 5,
+            pady = 5,
+            sticky = "w"
+        )
         self.frm_botoes = tk.Frame(
             self.frm_dados,
             border = 2,
             relief = "groove"
         )
         self.frm_botoes.grid(
-            row = 4,
+            row = 5,
             column = 0,
             padx = 10,
             pady = 5,
@@ -492,6 +516,7 @@ class Usuario_View:
         self.cmb_cidades["values"] = []
         self._cidades = []
         self.cmb_perfis.set("")
+        self.txt_senha.delete(0, tk.END)
         self.txt_nome.focus()
 
     def limpar_treeview(self):
@@ -527,7 +552,8 @@ class Usuario_View:
         if indice_perfil < 0:
             raise ValueError("Selecione um perfil.")
         perfil = self._perfis[indice_perfil]
-        return nome, email, data_nascimento, cidade, perfil
+        senha = self.txt_senha.get()
+        return nome, email, data_nascimento, cidade, perfil, senha
 
     def exibir_mensagem(self, mensagem, sucesso=True):
         if sucesso:
