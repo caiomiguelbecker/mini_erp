@@ -113,6 +113,36 @@ class ErpApplication:
         )
 
         # ===========================
+        # PERFIS (DAO)
+        # ===========================
+        # Só o DAO nasce aqui: Usuario_DAO e Fornecedor_Controller
+        # precisam dele antes de existir um fornecedor_dao para o
+        # Perfil_Controller usar. O Perfil_Controller é montado mais
+        # abaixo, depois que FORNECEDORES já existe.
+
+        self._dao_perfis = Perfil_DAO(
+            self._database
+        )
+
+        # ===========================
+        # USUÁRIOS
+        # ===========================
+
+        self._dao_usuarios = Usuario_DAO(
+            self._database,
+            self._dao_cidades,
+            self._dao_perfis
+        )
+
+        self._ctrl_usuarios = Usuario_Controller(
+            dao=self._dao_usuarios,
+            cidade_dao=self._dao_cidades,
+            estado_dao=self._dao_estados,
+            perfil_dao=self._dao_perfis,
+            view=None
+        )
+
+        # ===========================
         # FORNECEDORES
         # ===========================
 
@@ -133,6 +163,7 @@ class ErpApplication:
             categoria_dao=self._dao_categorias,
             fornecedor_categoria_dao=self._dao_fornecedor_categorias,
             perfil_fornecedor_dao=self._dao_perfil_fornecedores,
+            usuario_dao=self._dao_usuarios,
             view=None
         )
 
@@ -152,35 +183,13 @@ class ErpApplication:
         )
 
         # ===========================
-        # PERFIS
+        # PERFIS (Controller)
         # ===========================
-
-        self._dao_perfis = Perfil_DAO(
-            self._database
-        )
 
         self._ctrl_perfis = Perfil_Controller(
             dao=self._dao_perfis,
             fornecedor_dao=self._dao_fornecedores,
             perfil_fornecedor_dao=self._dao_perfil_fornecedores,
-            view=None
-        )
-
-        # ===========================
-        # USUÁRIOS
-        # ===========================
-
-        self._dao_usuarios = Usuario_DAO(
-            self._database,
-            self._dao_cidades,
-            self._dao_perfis
-        )
-
-        self._ctrl_usuarios = Usuario_Controller(
-            dao=self._dao_usuarios,
-            cidade_dao=self._dao_cidades,
-            estado_dao=self._dao_estados,
-            perfil_dao=self._dao_perfis,
             view=None
         )
 

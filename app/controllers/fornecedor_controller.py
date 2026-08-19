@@ -1,11 +1,12 @@
 from app.models.fornecedor import Fornecedor
 
 class Fornecedor_Controller:
-    def __init__(self, dao, categoria_dao, fornecedor_categoria_dao, perfil_fornecedor_dao, view):
+    def __init__(self, dao, categoria_dao, fornecedor_categoria_dao, perfil_fornecedor_dao, usuario_dao, view):
         self.dao = dao
         self.categoria_dao = categoria_dao
         self.fornecedor_categoria_dao = fornecedor_categoria_dao
         self.perfil_fornecedor_dao = perfil_fornecedor_dao
+        self.usuario_dao = usuario_dao
         self.view = view
         self.fornecedor_selecionado = None
         self.usuario_logado = None
@@ -32,8 +33,9 @@ class Fornecedor_Controller:
         
     def get_all(self):
         if self.usuario_logado is not None:
+            usuario_atual = self.usuario_dao.get_by_id(self.usuario_logado.id)
             fornecedores = self.perfil_fornecedor_dao.get_fornecedores_por_perfil(
-                self.usuario_logado.perfil
+                usuario_atual.perfil
             )
         else:
             fornecedores = self.dao.get_all()
