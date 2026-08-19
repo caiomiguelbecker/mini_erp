@@ -216,12 +216,11 @@ class Usuario_View:
         )
         self.lbl_senha = tk.Label(
             self.frm_dados,
-            text = "Nova senha (deixe em branco para manter, na edição):"
+            text = "Senha:"
         )
         self.lbl_senha.grid(
             row = 4,
             column = 0,
-            columnspan = 2,
             padx = 5,
             pady = 5,
             sticky = "w"
@@ -233,7 +232,7 @@ class Usuario_View:
         )
         self.txt_senha.grid(
             row = 4,
-            column = 2,
+            column = 1,
             padx = 5,
             pady = 5,
             sticky = "w"
