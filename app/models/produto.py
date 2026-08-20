@@ -54,12 +54,10 @@ class Produto:
 
     def atualizar_dados(self, novo_nome, novo_estoque, novo_preco, novo_fornecedor):
         if novo_preco < 0:
-            raise ValueError("produto.erro_preco")
+            raise ValueError("produto.erro_preco_negativo")
         if novo_estoque < 0:
-            raise ValueError("produto.erro_estoque")
+            raise ValueError("produto.erro_estoque_negativo")
         self._nome = novo_nome
         self._estoque = novo_estoque
         self._preco = novo_preco
         self._fornecedor = novo_fornecedor
-            
-

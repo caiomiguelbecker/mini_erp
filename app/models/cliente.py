@@ -74,7 +74,7 @@ class Cliente:
 
         if novo_limite_credito < 0:
             raise ValueError(
-                "cliente.erro_limite_credito"
+                "cliente.erro_limite_negativo"
             )
 
         self._nome = novo_nome

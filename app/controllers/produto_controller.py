@@ -1,4 +1,5 @@
 from app.models.produto import Produto
+from app.core.idioma import Idioma
 
 class Produto_Controller:
     def __init__(self, dao, fornecedor_dao, view):
@@ -20,9 +21,9 @@ class Produto_Controller:
             produto = Produto(None, nome, estoque, preco, fornecedor)
             self.dao.save(produto)
             self.get_all()
-            self.view.exibir_mensagem("Produto cadastrado com sucesso!")
+            self.view.exibir_mensagem(Idioma.t("produto.cadastrado_sucesso"))
         except ValueError as e:
-            self.view.exibir_mensagem(f"Erro: {str(e)}", False)
+            self.view.exibir_mensagem(f"{Idioma.t('comum.erro_prefixo')}{Idioma.t(str(e))}", False)
 
     def get_all(self):
         produtos = self.dao.get_all()
@@ -44,19 +45,19 @@ class Produto_Controller:
     def update(self):
         try:
             if self.produto_selecionado is None:
-                self.view.exibir_mensagem("Selecione um produto na lista.", False)
+                self.view.exibir_mensagem(Idioma.t("produto.selecione_da_lista"), False)
                 return
             nome, estoque, preco, fornecedor = self.view.ler_dados_produto()
             self.produto_selecionado.atualizar_dados(nome, estoque, preco, fornecedor)
             self.dao.update(self.produto_selecionado)
             self.get_all()
-            self.view.exibir_mensagem("Produto atualizado com sucesso!")
+            self.view.exibir_mensagem(Idioma.t("produto.atualizado_sucesso"))
         except ValueError as e:
-            self.view.exibir_mensagem(f"Erro: {str(e)}", False)
+            self.view.exibir_mensagem(f"{Idioma.t('comum.erro_prefixo')}{Idioma.t(str(e))}", False)
 
     def delete(self):
         if self.produto_selecionado is None:
-            self.view.exibir_mensagem("Selecione um produto na lista.", False)
+            self.view.exibir_mensagem(Idioma.t("produto.selecione_da_lista"), False)
             return
         if not self.view.confirmar_exclusao():
             return
@@ -66,8 +67,8 @@ class Produto_Controller:
                 self.produto_selecionado = None
                 self.view.limpar_campos()
                 self.get_all()
-                self.view.exibir_mensagem("Produto excluído com sucesso!")
+                self.view.exibir_mensagem(Idioma.t("produto.excluido_sucesso"))
             else:
-                self.view.exibir_mensagem("Produto não encontrado.", False)
+                self.view.exibir_mensagem(Idioma.t("produto.nao_encontrado"), False)
         except Exception as e:
-            self.view.exibir_mensagem("Problemas ao excluir produto", False)
+            self.view.exibir_mensagem(Idioma.t("produto.erro_ao_excluir"), False)

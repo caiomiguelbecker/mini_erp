@@ -9,7 +9,7 @@ class Fornecedor:
 
     def validar_sla(self, sla):
         if sla < 0:
-            raise ValueError("fornecedor.sla_erro_negativo")
+            raise ValueError("fornecedor.erro_sla_negativo")
 
     # Encapsulamento do ID
     @property

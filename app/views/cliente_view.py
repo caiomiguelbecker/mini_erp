@@ -2,6 +2,7 @@
 
 from app.models.cliente import Cliente
 from app.core.data_utils import Data_Utils
+from app.core.idioma import Idioma
 
 import tkinter as tk
 from tkinter import messagebox
@@ -21,7 +22,7 @@ class Cliente_View:
         self.configurar_eventos()
 
     def configurar_janela(self):
-        self.root.title("CRUD de Clientes")
+        self.root.title(Idioma.t("cliente.janela_titulo"))
         self.root.geometry("900x600")
         self.root.resizable(False, False)
 
@@ -29,7 +30,7 @@ class Cliente_View:
     def criar_componentes(self):
         self.lbl_titulo = tk.Label(
             self.root,
-            text = "Cadastro de Clientes",
+            text = Idioma.t("cliente.titulo"),
             font = ("Arial", 16, "bold"),
         )
         self.lbl_titulo.grid(
@@ -41,7 +42,7 @@ class Cliente_View:
         )
         self.frm_dados = tk.LabelFrame(
             self.root,
-            text = "Dados do cliente"
+            text = Idioma.t("cliente.dados_frame")
         )
         self.frm_dados.grid(
             row = 1,
@@ -57,7 +58,7 @@ class Cliente_View:
         self.frm_dados.grid_columnconfigure(3, weight=1)
         self.lbl_id = tk.Label(
             self.frm_dados,
-            text = "ID:"
+            text = f"{Idioma.t('comum.id')}:"
         )
         self.lbl_id.grid(
             row = 0,
@@ -80,7 +81,7 @@ class Cliente_View:
         )
         self.lbl_nome = tk.Label(
             self.frm_dados,
-            text = "Nome:"
+            text = f"{Idioma.t('comum.nome')}:"
         )
         self.lbl_nome.grid(
             row = 1,
@@ -102,7 +103,7 @@ class Cliente_View:
         )
         self.lbl_data_nascimento = tk.Label(
             self.frm_dados,
-            text = "Nascimento (DD/MM/AAAA):"
+            text = f"{Idioma.t('cliente.nascimento')} (DD/MM/AAAA):"
         )
         self.lbl_data_nascimento.grid(
             row = 1,
@@ -124,7 +125,7 @@ class Cliente_View:
         )
         self.lbl_limite_credito = tk.Label(
             self.frm_dados,
-            text = "Limite de crédito:"
+            text = f"{Idioma.t('cliente.limite_credito')}:"
         )
         self.lbl_limite_credito.grid(
             row = 2,
@@ -146,7 +147,7 @@ class Cliente_View:
         )
         self.lbl_estados = tk.Label(
             self.frm_dados,
-            text = "Estado:"
+            text = f"{Idioma.t('cidade.estado')}:"
         )
         self.lbl_estados.grid(
             row = 2,
@@ -169,7 +170,7 @@ class Cliente_View:
         )
         self.lbl_cidades = tk.Label(
             self.frm_dados,
-            text = "Cidade:"
+            text = f"{Idioma.t('cliente.cidade')}:"
         )
         self.lbl_cidades.grid(
             row = 3,
@@ -204,7 +205,7 @@ class Cliente_View:
         )
         self.btn_novo = tk.Button(
             self.frm_botoes,
-            text = "Novo",
+            text = Idioma.t("comum.novo"),
             width = 15
         )
         self.btn_novo.grid(
@@ -215,7 +216,7 @@ class Cliente_View:
         )
         self.btn_salvar = tk.Button(
             self.frm_botoes,
-            text = "Salvar",
+            text = Idioma.t("comum.salvar"),
             width = 15
         )
         self.btn_salvar.grid(
@@ -226,7 +227,7 @@ class Cliente_View:
         )
         self.btn_alterar = tk.Button(
             self.frm_botoes,
-            text = "Alterar",
+            text = Idioma.t("comum.alterar"),
             width = 15
         )
         self.btn_alterar.grid(
@@ -237,7 +238,7 @@ class Cliente_View:
         )
         self.btn_excluir = tk.Button(
             self.frm_botoes,
-            text = "Excluir",
+            text = Idioma.t("comum.excluir"),
             width = 15
         )
         self.btn_excluir.grid(
@@ -248,7 +249,7 @@ class Cliente_View:
         )
         self.btn_fechar = tk.Button(
             self.frm_botoes,
-            text = "Fechar",
+            text = Idioma.t("comum.fechar"),
             width = 15
         )
         self.btn_fechar.grid(
@@ -320,31 +321,31 @@ class Cliente_View:
         )
         self.tbl_clientes.heading(
             "id",
-            text = "ID"
+            text = Idioma.t("comum.id")
         )
         self.tbl_clientes.heading(
             "nome",
-            text = "Nome"
+            text = Idioma.t("comum.nome")
         )
         self.tbl_clientes.heading(
             "nascimento",
-            text = "Nascimento"
+            text = Idioma.t("cliente.nascimento")
         )
         self.tbl_clientes.heading(
             "idade",
-            text = "Idade"
+            text = Idioma.t("cliente.idade")
         )
         self.tbl_clientes.heading(
             "limite",
-            text = "Limite de crédito"
+            text = Idioma.t("cliente.limite_credito")
         )
         self.tbl_clientes.heading(
             "cidade",
-            text = "Cidade"
+            text = Idioma.t("cliente.cidade")
         )
         self.tbl_clientes.heading(
             "estado",
-            text = "UF"
+            text = Idioma.t("cliente.uf")
         )
     def configurar_eventos(self):
         self.btn_novo.config(
@@ -460,8 +461,8 @@ class Cliente_View:
     def confirmar_exclusao(self):
 
         return messagebox.askyesno(
-            "Confirmação",
-            "Deseja realmente excluir este cliente?",
+            Idioma.t("comum.confirmacao"),
+            Idioma.t("cliente.confirmar_exclusao"),
             parent=self.root
         )
 
@@ -469,11 +470,11 @@ class Cliente_View:
         nome = self.txt_nome.get()
         data_nascimento = self.txt_data_nascimento.get()
         if not Data_Utils.validar_data(data_nascimento):
-            raise ValueError("Data de nascimento inválida. Use o formato DD/MM/AAAA.")
+            raise ValueError("cliente.erro_data_invalida")
         limite_credito = float(self.txt_limite_credito.get())
         indice = self.cmb_cidades.current()
         if indice < 0:
-            raise ValueError("Selecione uma cidade.")
+            raise ValueError("cliente.erro_cidade_nao_selecionado")
         cidade = self._cidades[indice]
         return nome, data_nascimento, limite_credito, cidade
 

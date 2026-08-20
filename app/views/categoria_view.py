@@ -1,5 +1,3 @@
-
-
 from app.models.categoria import Categoria
 from app.core.idioma import Idioma
 

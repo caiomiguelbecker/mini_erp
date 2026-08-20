@@ -2,6 +2,7 @@
 
 from app.models.perfil import Perfil
 from app.views.perfil_fornecedor_view import Perfil_Fornecedor_View
+from app.core.idioma import Idioma
 
 import tkinter as tk
 from tkinter import messagebox
@@ -19,7 +20,7 @@ class Perfil_View:
         self.configurar_eventos()
 
     def configurar_janela(self):
-        self.root.title("CRUD de Perfis")
+        self.root.title(Idioma.t("perfil.janela_titulo"))
         self.root.geometry("800x600")
         self.root.resizable(False, False)
 
@@ -27,7 +28,7 @@ class Perfil_View:
     def criar_componentes(self):
         self.lbl_titulo = tk.Label(
             self.root,
-            text = "Cadastro de Perfis",
+            text = Idioma.t("perfil.titulo"),
             font = ("Arial", 16, "bold"),
         )
         self.lbl_titulo.grid(
@@ -39,7 +40,7 @@ class Perfil_View:
         )
         self.frm_dados = tk.LabelFrame(
             self.root,
-            text = "Dados do perfil"
+            text = Idioma.t("perfil.dados_frame")
         )
         self.frm_dados.grid(
             row = 1,
@@ -53,7 +54,7 @@ class Perfil_View:
         self.frm_dados.grid_columnconfigure(1, weight=1)
         self.lbl_id = tk.Label(
             self.frm_dados,
-            text = "ID:"
+            text = f"{Idioma.t('comum.id')}:"
         )
         self.lbl_id.grid(
             row = 0,
@@ -76,7 +77,7 @@ class Perfil_View:
         )
         self.lbl_nome = tk.Label(
             self.frm_dados,
-            text = "Nome:"
+            text = f"{Idioma.t('comum.nome')}:"
         )
         self.lbl_nome.grid(
             row = 1,
@@ -98,7 +99,7 @@ class Perfil_View:
         )
         self.lbl_descricao = tk.Label(
             self.frm_dados,
-            text = "Descrição:"
+            text = f"{Idioma.t('perfil.descricao')}:"
         )
         self.lbl_descricao.grid(
             row = 2,
@@ -135,7 +136,7 @@ class Perfil_View:
         )
         self.btn_novo = tk.Button(
             self.frm_botoes,
-            text = "Novo",
+            text = Idioma.t("comum.novo"),
             width = 15
         )
         self.btn_novo.grid(
@@ -146,7 +147,7 @@ class Perfil_View:
         )
         self.btn_salvar = tk.Button(
             self.frm_botoes,
-            text = "Salvar",
+            text = Idioma.t("comum.salvar"),
             width = 15
         )
         self.btn_salvar.grid(
@@ -157,7 +158,7 @@ class Perfil_View:
         )
         self.btn_alterar = tk.Button(
             self.frm_botoes,
-            text = "Alterar",
+            text = Idioma.t("comum.alterar"),
             width = 15
         )
         self.btn_alterar.grid(
@@ -168,7 +169,7 @@ class Perfil_View:
         )
         self.btn_excluir = tk.Button(
             self.frm_botoes,
-            text = "Excluir",
+            text = Idioma.t("comum.excluir"),
             width = 15
         )
         self.btn_excluir.grid(
@@ -179,7 +180,7 @@ class Perfil_View:
         )
         self.btn_fornecedores = tk.Button(
             self.frm_botoes,
-            text = "Fornecedores",
+            text = Idioma.t("perfil.fornecedores"),
             width = 15
         )
         self.btn_fornecedores.grid(
@@ -190,7 +191,7 @@ class Perfil_View:
         )
         self.btn_fechar = tk.Button(
             self.frm_botoes,
-            text = "Fechar",
+            text = Idioma.t("comum.fechar"),
             width = 15
         )
         self.btn_fechar.grid(
@@ -238,15 +239,15 @@ class Perfil_View:
         )
         self.tbl_perfis.heading(
             "id",
-            text = "ID"
+            text = Idioma.t("comum.id")
         )
         self.tbl_perfis.heading(
             "nome",
-            text = "Nome"
+            text = Idioma.t("comum.nome")
         )
         self.tbl_perfis.heading(
             "descricao",
-            text = "Descrição"
+            text = Idioma.t("perfil.descricao")
         )
     def configurar_eventos(self):
         self.btn_novo.config(
@@ -314,8 +315,8 @@ class Perfil_View:
     def confirmar_exclusao(self):
 
         return messagebox.askyesno(
-            "Confirmação",
-            "Deseja realmente excluir este perfil?",
+            Idioma.t("comum.confirmacao"),
+            Idioma.t("perfil.confirmar_exclusao"),
             parent=self.root
         )
 

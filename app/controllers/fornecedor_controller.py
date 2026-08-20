@@ -1,4 +1,5 @@
 from app.models.fornecedor import Fornecedor
+from app.core.idioma import Idioma
 
 class Fornecedor_Controller:
     def __init__(self, dao, categoria_dao, fornecedor_categoria_dao, view):
@@ -24,9 +25,9 @@ class Fornecedor_Controller:
                 )
             self.dao.save(fornecedor)
             self.get_all()
-            self.view.exibir_mensagem("Fornecedor cadastrado com sucesso!")
+            self.view.exibir_mensagem(Idioma.t("fornecedor.cadastrado_sucesso"))
         except ValueError:
-            self.view.exibir_mensagem("Erro: Entrada inválida. Tente novamente.", False)
+            self.view.exibir_mensagem(f"{Idioma.t('comum.erro_prefixo')}{Idioma.t('fornecedor.erro_entrada_invalida')}", False)
         
     def get_all(self):
         fornecedores = self.dao.get_all()
@@ -47,19 +48,19 @@ class Fornecedor_Controller:
     def update(self):
         try:
             if self.fornecedor_selecionado is None:
-                self.view.exibir_mensagem("Selecione um fornecedor na lista.", False)
+                self.view.exibir_mensagem(Idioma.t("fornecedor.selecione_da_lista"), False)
                 return
             razao_social, nome_fantasia, cnpj, sla_atendimento = self.view.ler_dados_fornecedor()
             self.fornecedor_selecionado.atualizar_dados(razao_social, nome_fantasia, cnpj, sla_atendimento)
             self.dao.update(self.fornecedor_selecionado)
             self.get_all()
-            self.view.exibir_mensagem("Fornecedor atualizado com sucesso!")
+            self.view.exibir_mensagem(Idioma.t("fornecedor.atualizado_sucesso"))
         except ValueError as e:
-            self.view.exibir_mensagem(f"Erro: {str(e)}", False)
+            self.view.exibir_mensagem(f"{Idioma.t('comum.erro_prefixo')}{Idioma.t(str(e))}", False)
 
     def delete(self):
         if self.fornecedor_selecionado is None:
-            self.view.exibir_mensagem("Selecione um fornecedor na lista.", False)
+            self.view.exibir_mensagem(Idioma.t("fornecedor.selecione_da_lista"), False)
             return
         if not self.view.confirmar_exclusao():
             return
@@ -69,19 +70,19 @@ class Fornecedor_Controller:
                 self.fornecedor_selecionado = None
                 self.view.limpar_campos()
                 self.get_all()
-                self.view.exibir_mensagem("Fornecedor excluído com sucesso!")
+                self.view.exibir_mensagem(Idioma.t("fornecedor.excluido_sucesso"))
             else:
-                self.view.exibir_mensagem("Fornecedor não encontrado.", False)
+                self.view.exibir_mensagem(Idioma.t("fornecedor.nao_encontrado"), False)
         except Exception as e:
-            self.view.exibir_mensagem("Problemas ao excluir fornecedor", False)
+            self.view.exibir_mensagem(Idioma.t("fornecedor.erro_ao_excluir"), False)
 
     def abrir_categorias(self):
         if self.fornecedor_selecionado is None:
-            self.view.exibir_mensagem("Selecione um fornecedor na lista.", False)
+            self.view.exibir_mensagem(Idioma.t("fornecedor.selecione_da_lista"), False)
             return
         categorias_disponiveis = self.categoria_dao.get_all()
         if not categorias_disponiveis:
-            self.view.exibir_mensagem("Cadastre categorias antes de associá-las a um fornecedor.", False)
+            self.view.exibir_mensagem(Idioma.t("fornecedor.sem_categorias"), False)
             return
         self.fornecedor_selecionado.categorias = self.fornecedor_categoria_dao.get_categorias_por_fornecedor(
             self.fornecedor_selecionado
@@ -100,7 +101,7 @@ class Fornecedor_Controller:
             fornecedor.categorias = self.fornecedor_categoria_dao.get_categorias_por_fornecedor(
                 fornecedor
             )
-            view_categorias.exibir_mensagem("Categorias do fornecedor atualizadas com sucesso!")
+            view_categorias.exibir_mensagem(Idioma.t("fornecedor.categorias_atualizadas_sucesso"))
             view_categorias.fechar()
         except Exception as e:
-            view_categorias.exibir_mensagem("Não foi possível salvar as categorias do fornecedor.", False)
+            view_categorias.exibir_mensagem(Idioma.t("fornecedor.erro_salvar_categorias"), False)

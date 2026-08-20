@@ -1,6 +1,7 @@
 
 
 from app.models.produto import Produto
+from app.core.idioma import Idioma
 
 import tkinter as tk
 from tkinter import messagebox
@@ -19,7 +20,7 @@ class Produto_View:
         self.configurar_eventos()
 
     def configurar_janela(self):
-        self.root.title("CRUD de Produtos")
+        self.root.title(Idioma.t("produto.janela_titulo"))
         self.root.geometry("800x600")
         self.root.resizable(False, False)
 
@@ -27,7 +28,7 @@ class Produto_View:
     def criar_componentes(self):
         self.lbl_titulo = tk.Label(
             self.root,
-            text = "Cadastro de Produtos",
+            text = Idioma.t("produto.titulo"),
             font = ("Arial", 16, "bold"),
         )
         self.lbl_titulo.grid(
@@ -39,7 +40,7 @@ class Produto_View:
         )
         self.frm_dados = tk.LabelFrame(
             self.root,
-            text = "Dados do produto"
+            text = Idioma.t("produto.dados_frame")
         )
         self.frm_dados.grid(
             row = 1,
@@ -55,7 +56,7 @@ class Produto_View:
         self.frm_dados.grid_columnconfigure(3, weight=1)
         self.lbl_id = tk.Label(
             self.frm_dados,
-            text = "ID:"
+            text = f"{Idioma.t('comum.id')}:"
         )
         self.lbl_id.grid(
             row = 0,
@@ -78,7 +79,7 @@ class Produto_View:
         )
         self.lbl_nome = tk.Label(
             self.frm_dados,
-            text = "Nome:"
+            text = f"{Idioma.t('comum.nome')}:"
         )
         self.lbl_nome.grid(
             row = 1,
@@ -100,7 +101,7 @@ class Produto_View:
         )
         self.lbl_fornecedores = tk.Label(
             self.frm_dados,
-            text = "Fornecedor:"
+            text = f"{Idioma.t('produto.fornecedor')}:"
         )
         self.lbl_fornecedores.grid(
             row = 1,
@@ -123,7 +124,7 @@ class Produto_View:
         )
         self.lbl_estoque = tk.Label(
             self.frm_dados,
-            text = "Estoque:"
+            text = f"{Idioma.t('produto.estoque')}:"
         )
         self.lbl_estoque.grid(
             row = 2,
@@ -145,7 +146,7 @@ class Produto_View:
         )
         self.lbl_preco = tk.Label(
             self.frm_dados,
-            text = "Preço:"
+            text = f"{Idioma.t('produto.preco')}:"
         )
         self.lbl_preco.grid(
             row = 2,
@@ -179,7 +180,7 @@ class Produto_View:
         )
         self.btn_novo = tk.Button(
             self.frm_botoes,
-            text = "Novo",
+            text = Idioma.t("comum.novo"),
             width = 15
         )
         self.btn_novo.grid(
@@ -190,7 +191,7 @@ class Produto_View:
         )
         self.btn_salvar = tk.Button(
             self.frm_botoes,
-            text = "Salvar",
+            text = Idioma.t("comum.salvar"),
             width = 15
         )
         self.btn_salvar.grid(
@@ -201,7 +202,7 @@ class Produto_View:
         )
         self.btn_alterar = tk.Button(
             self.frm_botoes,
-            text = "Alterar",
+            text = Idioma.t("comum.alterar"),
             width = 15
         )
         self.btn_alterar.grid(
@@ -212,7 +213,7 @@ class Produto_View:
         )
         self.btn_excluir = tk.Button(
             self.frm_botoes,
-            text = "Excluir",
+            text = Idioma.t("comum.excluir"),
             width = 15
         )
         self.btn_excluir.grid(
@@ -223,7 +224,7 @@ class Produto_View:
         )
         self.btn_fechar = tk.Button(
             self.frm_botoes,
-            text = "Fechar",
+            text = Idioma.t("comum.fechar"),
             width = 15
         )
         self.btn_fechar.grid(
@@ -286,27 +287,27 @@ class Produto_View:
         )
         self.tbl_produtos.heading(
             "id",
-            text = "ID"
+            text = Idioma.t("comum.id")
         )
         self.tbl_produtos.heading(
             "nome",
-            text = "Nome"
+            text = Idioma.t("comum.nome")
         )
         self.tbl_produtos.heading(
             "estoque",
-            text = "Estoque"
+            text = Idioma.t("produto.estoque")
         )
         self.tbl_produtos.heading(
             "preco",
-            text = "Preço"
+            text = Idioma.t("produto.preco")
         )
         self.tbl_produtos.heading(
             "valor_estoque",
-            text = "Valor em estoque"
+            text = Idioma.t("produto.valor_estoque")
         )
         self.tbl_produtos.heading(
             "fornecedor",
-            text = "Fornecedor"
+            text = Idioma.t("produto.fornecedor")
         )
     def configurar_eventos(self):
         self.btn_novo.config(
@@ -393,8 +394,8 @@ class Produto_View:
     def confirmar_exclusao(self):
 
         return messagebox.askyesno(
-            "Confirmação",
-            "Deseja realmente excluir este produto?",
+            Idioma.t("comum.confirmacao"),
+            Idioma.t("produto.confirmar_exclusao"),
             parent=self.root
         )
 
@@ -404,7 +405,7 @@ class Produto_View:
         preco = float(self.txt_preco.get())
         indice = self.cmb_fornecedores.current()
         if indice < 0:
-            raise ValueError("Selecione um fornecedor.")
+            raise ValueError("produto.erro_fornecedor_nao_selecionado")
         fornecedor = self._fornecedores[indice]
         return nome, estoque, preco, fornecedor
 
