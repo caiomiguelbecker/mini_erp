@@ -165,6 +165,9 @@ class Idioma:
             "categoria.erro_entrada_invalida": "Entrada inválida. Tente novamente.",
             "categoria.cadastro_sucesso" : "Categoria cadastrada com sucesso.",
             
+            #tela fornecedor.categoria
+             "fornecedor_categoria.nome" : "Categoria de",
+            
             # Menu principal
             "menu.cadastros_basicos": "Cadastros básicos",
             "menu.estados": "Estados",

@@ -1,6 +1,7 @@
 from app.models.usuario import Usuario
 from app.core.data_utils import Data_Utils
 from app.core.idioma import Idioma
+from app.core.senha_utils import Senha_Utils 
 
 
 class Usuario_Controller:
@@ -34,14 +35,17 @@ class Usuario_Controller:
 
     def save(self):
         try:
-            nome, email, data_nascimento, cidade, perfil = self.view.ler_dados_usuario()
+            nome, email, data_nascimento, cidade, perfil, senha = self.view.ler_dados_usuario()
+            if not senha:
+                raise ValueError("Informe uma senha para o novo usuário.")
             usuario = Usuario(
                 None,
                 nome,
                 email,
                 Data_Utils.string_para_data(data_nascimento),
                 cidade,
-                perfil
+                perfil,
+                Senha_Utils.gerar_hash(senha)
             )
             self.dao.save(usuario)
             self.get_all()
@@ -75,7 +79,7 @@ class Usuario_Controller:
             if self.usuario_selecionado is None:
                 self.view.exibir_mensagem(Idioma.t("usuario.selecione_da_lista"), False)
                 return
-            nome, email, data_nascimento, cidade, perfil = self.view.ler_dados_usuario()
+            nome, email, data_nascimento, cidade, perfil, senha = self.view.ler_dados_usuario()
             self.usuario_selecionado.atualizar_dados(
                 nome,
                 email,
@@ -83,6 +87,8 @@ class Usuario_Controller:
                 cidade,
                 perfil
             )
+            if senha:
+                self.usuario_selecionado.senha = Senha_Utils.gerar_hash(senha)
             self.dao.update(self.usuario_selecionado)
             self.get_all()
             self.view.exibir_mensagem(Idioma.t("usuario.atualizado_sucesso"))
