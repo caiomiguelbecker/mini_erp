@@ -3,6 +3,8 @@
 import tkinter as tk
 from tkinter import messagebox
 
+from app.core.idioma import Idioma
+
 
 
 class Fornecedor_Categoria_View:
@@ -22,14 +24,16 @@ class Fornecedor_Categoria_View:
         self.preencher_lista()
 
     def configurar_janela(self):
-        self.root.title(f"Categorias de {self.fornecedor.nome_fantasia}")
+        self.root.title(
+            f"{Idioma.t('fornecedor_categoria.titulo_prefixo')} {self.fornecedor.nome_fantasia}"
+        )
         self.root.geometry("400x450")
         self.root.resizable(False, False)
 
     def criar_componentes(self):
         self.lbl_titulo = tk.Label(
             self.root,
-            text = f"Categorias de {self.fornecedor.nome_fantasia}",
+            text = f"{Idioma.t('fornecedor_categoria.titulo_prefixo')} {self.fornecedor.nome_fantasia}",
             font = ("Arial", 12, "bold"),
             wraplength = 380
         )
@@ -39,7 +43,7 @@ class Fornecedor_Categoria_View:
         )
         self.lbl_instrucao = tk.Label(
             self.root,
-            text = "Clique para marcar/desmarcar as categorias deste fornecedor:"
+            text = Idioma.t("fornecedor_categoria.instrucao")
         )
         self.lbl_instrucao.pack(
             padx = 10,
@@ -64,7 +68,7 @@ class Fornecedor_Categoria_View:
         )
         self.btn_salvar = tk.Button(
             self.frm_botoes,
-            text = "Salvar",
+            text = Idioma.t("comum.salvar"),
             width = 15,
             command = self.salvar
         )
@@ -75,7 +79,7 @@ class Fornecedor_Categoria_View:
         )
         self.btn_cancelar = tk.Button(
             self.frm_botoes,
-            text = "Cancelar",
+            text = Idioma.t("comum.cancelar"),
             width = 15,
             command = self.fechar
         )

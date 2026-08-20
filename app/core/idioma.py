@@ -71,6 +71,8 @@ class Idioma:
             "usuario.erro_ao_excluir": "Problemas ao excluir usuário",
             "usuario.erro_nome_vazio": "O nome do usuário não pode ficar vazio.",
             "usuario.erro_email_vazio": "O email do usuário não pode ficar vazio.",
+            "usuario.senha": "Senha",
+            "usuario.erro_senha_vazia": "Informe uma senha para o novo usuário.",
 
             # Tela de Perfis
             "perfil.janela_titulo": "CRUD de Perfis",
@@ -165,9 +167,24 @@ class Idioma:
             "categoria.erro_entrada_invalida": "Entrada inválida. Tente novamente.",
             "categoria.cadastro_sucesso" : "Categoria cadastrada com sucesso.",
             
-            #tela fornecedor.categoria
-             "fornecedor_categoria.nome" : "Categoria de",
-            
+            #tela fornecedor x categoria
+            "fornecedor_categoria.titulo_prefixo": "Categorias de",
+            "fornecedor_categoria.instrucao": "Clique para marcar/desmarcar as categorias deste fornecedor:",
+
+            #tela perfil x fornecedor
+            "perfil_fornecedor.titulo_prefixo": "Fornecedores do perfil",
+            "perfil_fornecedor.instrucao": "Clique para marcar/desmarcar os fornecedores deste perfil:",
+
+            # Tela de Login
+            "login.janela_titulo": "Login",
+            "login.sistema_titulo": "Sistema Corporativo ERP",
+            "login.email": "E-mail",
+            "login.senha": "Senha",
+            "login.idioma": "Idioma",
+            "login.entrar": "Entrar",
+            "login.campos_obrigatorios": "Informe e-mail e senha.",
+            "login.credenciais_invalidas": "E-mail ou senha inválidos.",
+
             # Menu principal
             "menu.cadastros_basicos": "Cadastros básicos",
             "menu.estados": "Estados",
@@ -251,6 +268,8 @@ class Idioma:
             "usuario.erro_ao_excluir": "Problem deleting user",
             "usuario.erro_nome_vazio": "The user name cannot be empty.",
             "usuario.erro_email_vazio": "The user email cannot be empty.",
+            "usuario.senha": "Password",
+            "usuario.erro_senha_vazia": "Enter a password for the new user.",
 
             # Roles screen
             "perfil.janela_titulo": "Role Management",
@@ -345,6 +364,24 @@ class Idioma:
             "categoria.erro_entrada_invalida": "Invalid input. Please try again.",
             "categoria.cadastro_sucesso": "Category registered successfully.",
 
+            # Supplier x category screen
+            "fornecedor_categoria.titulo_prefixo": "Categories for",
+            "fornecedor_categoria.instrucao": "Click to check/uncheck this supplier's categories:",
+
+            # Role x supplier screen
+            "perfil_fornecedor.titulo_prefixo": "Suppliers for role",
+            "perfil_fornecedor.instrucao": "Click to check/uncheck this role's suppliers:",
+
+            # Login screen
+            "login.janela_titulo": "Login",
+            "login.sistema_titulo": "Corporate ERP System",
+            "login.email": "Email",
+            "login.senha": "Password",
+            "login.idioma": "Language",
+            "login.entrar": "Sign in",
+            "login.campos_obrigatorios": "Enter your email and password.",
+            "login.credenciais_invalidas": "Invalid email or password.",
+
             # Main menu
             "menu.cadastros_basicos": "Basic registrations",
             "menu.estados": "States",
@@ -369,4 +406,3 @@ class Idioma:
     @classmethod
     def t(cls, chave):
         return cls.TEXTOS[cls.ATUAL].get(chave, chave)
-    

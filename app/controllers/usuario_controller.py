@@ -37,7 +37,7 @@ class Usuario_Controller:
         try:
             nome, email, data_nascimento, cidade, perfil, senha = self.view.ler_dados_usuario()
             if not senha:
-                raise ValueError("Informe uma senha para o novo usuário.")
+                raise ValueError("usuario.erro_senha_vazia")
             usuario = Usuario(
                 None,
                 nome,

@@ -215,7 +215,7 @@ class Usuario_View:
         )
         self.lbl_senha = tk.Label(
             self.frm_dados,
-            text = "Senha:"
+            text = f"{Idioma.t('usuario.senha')}:"
         )
         self.lbl_senha.grid(
             row = 4,

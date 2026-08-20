@@ -1,4 +1,5 @@
 from app.core.senha_utils import Senha_Utils
+from app.core.idioma import Idioma
 
 
 class Login_Controller:
@@ -11,13 +12,13 @@ class Login_Controller:
         email, senha = self.view.ler_dados_login()
 
         if not email or not senha:
-            self.view.exibir_mensagem("Informe e-mail e senha.", False)
+            self.view.exibir_mensagem(Idioma.t("login.campos_obrigatorios"), False)
             return
 
         usuario = self.usuario_dao.get_by_email(email)
 
         if usuario is None or not Senha_Utils.verificar_senha(senha, usuario.senha):
-            self.view.exibir_mensagem("E-mail ou senha inválidos.", False)
+            self.view.exibir_mensagem(Idioma.t("login.credenciais_invalidas"), False)
             return
 
         self.ao_autenticar(usuario)
